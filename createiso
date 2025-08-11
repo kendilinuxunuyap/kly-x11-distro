@@ -38,7 +38,7 @@ $rootfs/bin/busybox tar -xf $rootfs/tmp/kly/kur/rootfs.tar.xz -C $rootfs
 #paket adresi ekleniyor
 $rootfs/bin/busybox mkdir -p $rootfs/etc/kly
 echo "kendilinuxunuyap/kly-base-packages">$rootfs/etc/kly/sources.list
-echo "bpslinux/kly-x11-paketleri">>$rootfs/etc/kly/sources.list
+echo "kendilinuxunuyap/kly-x11-packages">>$rootfs/etc/kly/sources.list
 
 ### installing kly package in rootfs
 $rootfs/bin/kly -u $rootfs
