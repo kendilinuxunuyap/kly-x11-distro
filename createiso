@@ -37,7 +37,7 @@ $rootfs/bin/busybox tar -xf $rootfs/tmp/kly/kur/rootfs.tar.xz -C $rootfs
 
 #paket adresi ekleniyor
 $rootfs/bin/busybox mkdir -p $rootfs/etc/kly
-echo "bpslinux/kly-temel-paketler">$rootfs/etc/kly/sources.list
+echo "kendilinuxunuyap/kly-base-packages">$rootfs/etc/kly/sources.list
 echo "bpslinux/kly-x11-paketleri">>$rootfs/etc/kly/sources.list
 
 ### installing kly package in rootfs
@@ -58,18 +58,10 @@ done
 
 for paket in shadow file eudev cpio libsepol kmod audit libxcrypt libnsl libbsd libtirpc \
 e2fsprogs dosfstools initramfs-tools libxml2 expat libmd libaio lvm2 popt icu iproute2 \
-net-tools dhcp openrc rsync kbd linux-image dialog live-boot live-config parted busybox nano grub \
+net-tools dhcp openrc rsync kbd kernel dialog live-boot live-config parted busybox nano grub \
 efibootmgr efivar libssh openssh pam 
 do
 #$rootfs/bin/kly -i $paket $rootfs
-chroot $rootfs /bin/kly -ri $paket; 
-done
-
-for paket in shadow file eudev cpio libsepol kmod audit libxcrypt libnsl libbsd libtirpc \
-e2fsprogs dosfstools initramfs-tools libxml2 expat libmd libaio lvm2 popt icu iproute2 \
-net-tools dhcp openrc rsync kbd linux-image dialog live-boot live-config parted busybox nano grub \
-efibootmgr efivar libssh openssh pam 
-do
 chroot $rootfs /bin/kly -ri $paket; 
 done
 
