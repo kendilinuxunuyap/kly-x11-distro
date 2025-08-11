@@ -76,7 +76,13 @@ dbus polkit elogind
 do
 chroot $rootfs /bin/kly -ri $paket; 
 done
-
+### user add and passwd
+chroot $rootfs echo -e "1\n1\n"|chroot $rootfs passwd root
+chroot $rootfs useradd live -m -s /bin/sh -d /home/live
+chroot $rootfs echo -e "live\nlive\n"|chroot $rootfs passwd live
+for grp in users tty wheel cdrom audio dip video plugdev netdev; do
+chroot $rootfs usermod -aG $grp live || true
+done
 
 ### update-initrd
 fname=$(basename $rootfs/boot/config*)
