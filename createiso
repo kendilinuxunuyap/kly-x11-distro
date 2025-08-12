@@ -3,7 +3,8 @@ set -x
 if which apt &>/dev/null && [[ -d /var/lib/dpkg && -d /etc/apt ]] ; then
     apt-get update
     echo "işlem başladı....."
-    apt install xorriso grub-pc-bin grub-efi mtools make python3 dosfstools e2fsprogs squashfs-tools python3-yaml gcc wget curl unzip xz-utils debootstrap git erofs-utils zstd -y
+    apt install xorriso grub-pc-bin grub-efi mtools make python3 dosfstools e2fsprogs squashfs-tools python3-yaml gcc wget \
+    curl unzip xz-utils debootstrap git erofs-utils zstd -y
 fi
 
 apt-get install git devscripts equivs -y
@@ -31,7 +32,8 @@ bash -c "echo 'nameserver 8.8.8.8' > $rootfs/etc/resolv.conf"
 ### system chroot  bind/mount
 for i in dev dev/pts proc sys; do mount -o bind /$i $rootfs/$i; done
 ### manuel kly-tools install
-$rootfs/bin/busybox wget -O $rootfs/tmp/base-file-1.0.kly https://github.com/bpslinux/kly-temel-paketler/raw/refs/heads/master/base-file/base-file-1.0.kly 1>$rootfs/dev/null 2>$rootfs/dev/null
+$rootfs/bin/busybox wget -O $rootfs/tmp/base-file-1.0.kly https://github.com/bpslinux/kly-temel-paketler/raw/refs/heads/\
+master/base-file/base-file-1.0.kly 1>$rootfs/dev/null 2>$rootfs/dev/null
 $rootfs/bin/busybox tar -xf $rootfs/tmp/base-file-1.0.kly -C $rootfs/tmp/kly/kur
 $rootfs/bin/busybox tar -xf $rootfs/tmp/kly/kur/rootfs.tar.xz -C $rootfs
 
@@ -66,13 +68,14 @@ chroot $rootfs /bin/kly -ri $paket;
 done
 
 # burası x11 için olan paketlerdi. arasınsa ek paket varmı kontrol etmedim. edeceğim
-for paket in xorg-server pixman libpciaccess libXau libXdmcp libXfont2 libxshmfence libdrm libxcvt libfontenc freetype libpng harfbuzz glib \
+for paket in xorg-server pixman libpciaccess libXau libXdmcp libXfont2 libxshmfence libdrm libxcvt libfontenc freetype \
+libpng harfbuzz glib \
 xterm libXft fontconfig libXext libXaw libXmu libXinerama libXpm libXt libX11 libICE libXrender libxcb libSM \
 xf86-input-libinput xf86-input-vmmouse xf86-video-amdgpu xf86-video-ast xf86-video-ati xf86-video-dummy xf86-video-fbdev xf86-video-intel \
-xf86-video-mga xf86-video-nouveau xf86-video-qxl xf86-video-r128 xf86-video-siliconmotion xf86-video-vboxvideo xf86-video-vesa \
-xkbcomp libxkbfile libglvnd mesa xkeyboard-config libinput mtdev libevdev libwacom libgudev libffi xinit xcalc libXi \
-openbox libXcursor libXfixes pango libXrandr fribidi xcb-util libthai libdatrie startup-notification dejavu libunwind \
-dbus polkit elogind
+xf86-video-mga xf86-video-nouveau xf86-video-qxl xf86-video-r128 xf86-video-siliconmotion xf86-video-vboxvideo \
+xf86-video-vesa xkbcomp libxkbfile libglvnd mesa xkeyboard-config libinput mtdev libevdev libwacom libgudev libffi \
+xinit xcalc libXi openbox libXcursor libXfixes pango libXrandr fribidi xcb-util libthai libdatrie startup-notification \
+dejavu libunwind dbus polkit elogind
 do
 chroot $rootfs /bin/kly -ri $paket; 
 done
